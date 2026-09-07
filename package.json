@@ -1,0 +1,15 @@
+{
+  "name": "agentflow-golden-todolist",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal TodoList Golden Project for AgentFlow phase 1.7 real-path validation.",
+  "scripts": {
+    "test": "node --test",
+    "test:unit": "node --test test/todo.unit.test.mjs",
+    "test:integration": "node --test test/todo.integration.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}
