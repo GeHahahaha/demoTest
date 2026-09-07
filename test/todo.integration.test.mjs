@@ -14,3 +14,24 @@ test('todo workflow preserves state across a realistic command sequence', () => 
   ])
   assert.equal(second.id, 2)
 })
+
+test('clearCompleted end-to-end removes done items and keeps id allocation continuing', () => {
+  const list = createTodoList()
+  const doneOne = list.add('write requirements')
+  list.add('draft design')
+  list.add('implement feature')
+  const doneTwo = list.add('run lint')
+  list.complete(doneOne.id)
+  list.complete(doneTwo.id)
+
+  const removed = list.clearCompleted()
+
+  assert.equal(removed, 2)
+  assert.deepEqual(list.list(), [
+    { id: 2, title: 'draft design', completed: false },
+    { id: 3, title: 'implement feature', completed: false },
+  ])
+
+  const next = list.add('write evidence manifest')
+  assert.equal(next.id, 4)
+})

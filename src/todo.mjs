@@ -7,7 +7,7 @@
 export const buildVersion = '0.1.0'
 
 export function createTodoList(initial = []) {
-  const items = initial.map(normalize)
+  let items = initial.map(normalize)
 
   return {
     add(title) {
@@ -20,6 +20,11 @@ export function createTodoList(initial = []) {
       if (!item) return null
       item.completed = true
       return { ...item }
+    },
+    clearCompleted() {
+      const before = items.length
+      items = items.filter((entry) => !entry.completed)
+      return before - items.length
     },
     list() {
       return items.map((item) => ({ ...item }))
