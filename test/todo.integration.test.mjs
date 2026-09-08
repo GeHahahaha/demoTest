@@ -14,3 +14,24 @@ test('todo workflow preserves state across a realistic command sequence', () => 
   ])
   assert.equal(second.id, 2)
 })
+
+test('completedCount matches list-derived count across a command sequence', () => {
+  const list = createTodoList([{ id: 5, title: 'already done', completed: true }])
+  const consistency = () => list.completedCount() === list.list().filter((x) => x.completed).length
+
+  // initial completed-only list
+  assert.ok(consistency())
+  assert.equal(list.completedCount(), 1)
+
+  const added = list.add('fresh task')
+  assert.ok(consistency())
+  assert.equal(list.completedCount(), 1)
+
+  list.complete(added.id)
+  assert.ok(consistency())
+  assert.equal(list.completedCount(), 2)
+
+  list.add('another pending')
+  assert.ok(consistency())
+  assert.equal(list.completedCount(), 2)
+})
