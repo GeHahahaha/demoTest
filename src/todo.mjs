@@ -21,6 +21,26 @@ export function createTodoList(initial = []) {
       item.completed = true
       return { ...item }
     },
+    update(id, patch) {
+      const index = items.findIndex((entry) => entry.id === id)
+      if (index === -1) return null
+      if (!patch || typeof patch !== 'object') {
+        throw new TypeError('patch must be an object')
+      }
+      // Start from the current normalized entry and only override the fields
+      // the caller actually provides via own-property checks.
+      const current = items[index]
+      let title = current.title
+      let completed = current.completed
+      if (Object.prototype.hasOwnProperty.call(patch, 'title')) title = patch.title
+      if (Object.prototype.hasOwnProperty.call(patch, 'completed')) completed = patch.completed
+      // Validate/normalize the candidate through the same contract used by
+      // the rest of the module; this runs before any write so a TypeError
+      // leaves the list untouched (atomicity).
+      const updated = normalize({ id: current.id, title, completed })
+      items[index] = updated
+      return { ...updated }
+    },
     list() {
       return items.map((item) => ({ ...item }))
     },
