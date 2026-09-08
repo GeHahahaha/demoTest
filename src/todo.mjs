@@ -24,6 +24,9 @@ export function createTodoList(initial = []) {
     list() {
       return items.map((item) => ({ ...item }))
     },
+    count() {
+      return items.length
+    },
     version() {
       return buildVersion
     },
