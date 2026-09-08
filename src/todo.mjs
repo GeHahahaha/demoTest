@@ -21,6 +21,9 @@ export function createTodoList(initial = []) {
       item.completed = true
       return { ...item }
     },
+    has(id) {
+      return items.some((entry) => entry.id === id)
+    },
     list() {
       return items.map((item) => ({ ...item }))
     },
