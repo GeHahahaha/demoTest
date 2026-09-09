@@ -22,3 +22,20 @@ test('exposes a traceable build version', () => {
   assert.equal(createTodoList().version(), buildVersion)
   assert.match(buildVersion, /^\d+\.\d+\.\d+$/)
 })
+
+test('isEmpty() returns true only when there are no todos', () => {
+  const empty = createTodoList()
+  assert.equal(empty.isEmpty(), true)
+  assert.equal(empty.isEmpty() === (empty.list().length === 0), true)
+
+  const filled = createTodoList()
+  filled.add('write a todo')
+  assert.equal(filled.isEmpty(), false)
+  assert.equal(filled.isEmpty() === (filled.list().length === 0), true)
+})
+
+test('isEmpty() is false when only a completed todo exists', () => {
+  const list = createTodoList([{ id: 1, title: 'done item', completed: true }])
+  assert.equal(list.isEmpty(), false)
+  assert.equal(list.list().length, 1)
+})

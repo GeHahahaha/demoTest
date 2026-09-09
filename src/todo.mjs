@@ -24,6 +24,10 @@ export function createTodoList(initial = []) {
     list() {
       return items.map((item) => ({ ...item }))
     },
+    isEmpty() {
+      // empty 仅指「没有任何条目」（items 长度为 0），与条目的 completed 状态无关。
+      return items.length === 0
+    },
     version() {
       return buildVersion
     },
