@@ -21,6 +21,11 @@ export function createTodoList(initial = []) {
       item.completed = true
       return { ...item }
     },
+    get(id) {
+      const item = items.find((entry) => entry.id === id)
+      if (!item) return null
+      return { ...item }
+    },
     list() {
       return items.map((item) => ({ ...item }))
     },
