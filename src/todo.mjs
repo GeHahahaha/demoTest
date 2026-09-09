@@ -27,6 +27,9 @@ export function createTodoList(initial = []) {
     version() {
       return buildVersion
     },
+    peek() {
+      return items.length
+    },
   }
 }
 

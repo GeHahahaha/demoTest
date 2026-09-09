@@ -22,3 +22,27 @@ test('exposes a traceable build version', () => {
   assert.equal(createTodoList().version(), buildVersion)
   assert.match(buildVersion, /^\d+\.\d+\.\d+$/)
 })
+
+test('peek returns 0 for an empty list', () => {
+  assert.equal(createTodoList().peek(), 0)
+})
+
+test('peek tracks each added todo and matches list length', () => {
+  const list = createTodoList()
+  assert.equal(list.peek(), 0)
+  list.add('first')
+  assert.equal(list.peek(), 1)
+  list.add('second')
+  assert.equal(list.peek(), 2)
+  list.add('third')
+  assert.equal(list.peek(), list.list().length)
+})
+
+test('peek counts items seeded through the initial list', () => {
+  const list = createTodoList([
+    { id: 1, title: 'alpha', completed: false },
+    { id: 2, title: 'beta', completed: true },
+  ])
+  assert.equal(list.peek(), 2)
+  assert.equal(list.peek(), list.list().length)
+})
