@@ -27,6 +27,13 @@ export function createTodoList(initial = []) {
     version() {
       return buildVersion
     },
+    removeCompleted() {
+      const survivors = items.filter((item) => !item.completed)
+      const removed = items.length - survivors.length
+      items.length = 0
+      items.push(...survivors)
+      return removed
+    },
   }
 }
 
