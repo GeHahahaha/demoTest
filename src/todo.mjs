@@ -21,6 +21,20 @@ export function createTodoList(initial = []) {
       item.completed = true
       return { ...item }
     },
+    clearCompleted() {
+      let removed = 0
+      let writeIndex = 0
+      for (const item of items) {
+        if (item.completed === true) {
+          removed += 1
+          continue
+        }
+        items[writeIndex] = item
+        writeIndex += 1
+      }
+      items.length = writeIndex
+      return removed
+    },
     list() {
       return items.map((item) => ({ ...item }))
     },
