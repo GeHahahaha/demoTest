@@ -21,6 +21,16 @@ export function createTodoList(initial = []) {
       item.completed = true
       return { ...item }
     },
+    clearCompleted() {
+      let removed = 0
+      for (let index = items.length - 1; index >= 0; index -= 1) {
+        if (items[index].completed === true) {
+          items.splice(index, 1)
+          removed += 1
+        }
+      }
+      return removed
+    },
     list() {
       return items.map((item) => ({ ...item }))
     },
