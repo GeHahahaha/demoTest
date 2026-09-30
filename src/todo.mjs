@@ -24,6 +24,13 @@ export function createTodoList(initial = []) {
     list() {
       return items.map((item) => ({ ...item }))
     },
+    clearCompleted() {
+      const remaining = items.filter((item) => !item.completed)
+      const removed = items.length - remaining.length
+      // Keep the same array instance the other methods close over.
+      items.splice(0, items.length, ...remaining)
+      return removed
+    },
     version() {
       return buildVersion
     },
